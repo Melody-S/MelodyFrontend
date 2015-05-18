@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="typewriterApp">
+<head>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.css">
+</head>
+
+<body layout="column">
+<md-toolbar>
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings">
+            <md-icon md-svg-icon="menu.svg"></md-icon>
+        </md-button>
+        <h2>
+            <span>Hospital Thingy</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="More">
+            <md-icon md-svg-icon="help.svg"></md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<div style="width: 70%; margin: auto;" ng-controller="AutoCtrl as ctrl">
+    <md-autocomplete
+            ng-disabled="ctrl.isDisabled"
+            md-no-cache="ctrl.noCache"
+            md-selected-item="ctrl.selectedItem"
+            md-search-text-change="ctrl.querySearch(ctrl.searchText)"
+            md-search-text="ctrl.searchText"
+            md-selected-item-change="ctrl.selectedItemChange(item)"
+            md-items="item in ctrl.current"
+            md-item-text="item"
+            md-min-length="0"
+            placeholder="Type your knowledge">
+        <md-item-template>
+            <span style="color: #000;" md-highlight-text="searchText" md-highlight-flags="^i">{{item}}</span>
+        </md-item-template>
+        <md-not-found>
+            No matches found for "{{searchText}}".
+        </md-not-found>
+    </md-autocomplete>
+    <pre>
+
+
+
+
+
+    </pre>
+    <md-list>
+        <md-header>Recent Rules</md-header>
+        <md-list-item class="md-1-line" ng-repeat="item in ctrl.recent">
+            <div class="md-list-item-text">
+                <p>{{item}} <a href="">edit</a> <a href="">delete</a> </p>
+            </div>
+        </md-list-item>
+    </md-list>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.js"></script>
+
+<script src="ajs.js"></script>
+</body>
+</html>
