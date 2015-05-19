@@ -13,21 +13,22 @@ angular.module('typewriterApp', ['ngMaterial'])
         ctrl.selectedItemChange = selectedItemChange;
         ctrl.searchTextChange = searchTextChange;
         ctrl.recent = [];
+        ctrl.currentRule = [];
 
         function querySearch (query) {
             if (query.length == 0) {
                 ctrl.current = ctrl.all;
-                console.log("1" + 'Query: ' + query + 'Current: ' + ctrl.current );
+                //console.log("1" + 'Query: ' + query + 'Current: ' + ctrl.current );
             }
             else {
                 ctrl.current = [];
                 angular.forEach(ctrl.all, function (match) {
                     if (query == match.substr(0, query.length)) {
                         ctrl.current.push(match);
-                        console.log("Match: " + match);
+                        //console.log("Match: " + match);
                     }
                 });
-                console.log("2" + 'Query: ' + query + 'Current: ' + ctrl.current);
+                //console.log("2" + 'Query: ' + query + 'Current: ' + ctrl.current);
 
             }
         };
@@ -37,16 +38,7 @@ angular.module('typewriterApp', ['ngMaterial'])
         }
         function selectedItemChange(item) {
             //  console.log('Item change to ' + item.stringify());
-            $scope.openToast();
-            angular.forEach(ctrl.all, function(match) {
-                console.log("match: " + match + " textSearch: " + ctrl.searchText)
-                if(match == ctrl.searchText) {
-                    ctrl.recent.push(ctrl.searchText)
-                    if (ctrl.recent.length > 5) {
-                        ctrl.recent = ctrl.recent.shift();
-                    }
-                }
-            })
+
 
         }
 
@@ -54,6 +46,17 @@ angular.module('typewriterApp', ['ngMaterial'])
             $mdToast.show($mdToast.simple()
                 .content('Rule added!')
                 .position("bottom right"));
-        }
+        };
+
+        ctrl.addRule = function(){
+            $scope.openToast();
+                ctrl.recent.reverse().push(ctrl.currentRule.slice());
+                ctrl.recent.reverse();
+                if (ctrl.recent.length > 3) {
+                    ctrl.recent.reverse().shift();
+                    ctrl.recent.reverse();
+                }
+            }
+
 
     });

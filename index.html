@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.css">
 </head>
 
-<body layout="column">
+<body layout="column" ng-controller="AutoCtrl as ctrl">
 <md-toolbar>
     <div class="md-toolbar-tools">
         <md-button class="md-icon-button" aria-label="Settings">
@@ -19,28 +19,39 @@
         </md-button>
     </div>
 </md-toolbar>
-<div style="width: 70%; margin: auto;" ng-controller="AutoCtrl as ctrl">
-    <md-autocomplete
-            ng-disabled="ctrl.isDisabled"
-            md-no-cache="ctrl.noCache"
-            md-selected-item="ctrl.selectedItem"
-            md-search-text-change="ctrl.querySearch(ctrl.searchText)"
-            md-search-text="ctrl.searchText"
-            md-selected-item-change="ctrl.selectedItemChange(item)"
-            md-items="item in ctrl.current"
-            md-item-text="item"
-            md-min-length="0"
-            placeholder="Type your knowledge">
-        <md-item-template>
-            <span style="color: #000;" md-highlight-text="searchText" md-highlight-flags="^i">{{item}}</span>
-        </md-item-template>
-        <md-not-found>
-            No matches found for "{{searchText}}".
-        </md-not-found>
-    </md-autocomplete>
+<div style="width: 70%; margin-left:auto; margin-right: auto; margin-top: 10%;">
+    <div layout="row">
+        <form style="width: 100%" layout="row" ng-submit="ctrl.addRule()">
+            <md-chips style="width: 100%" ng-model="ctrl.currentRule" md-autocomplete-snap md-require-match>
+                <md-autocomplete
+                        style="width:100%;"
+                        ng-disabled="ctrl.isDisabled"
+                        md-no-cache="ctrl.noCache"
+                        md-selected-item="ctrl.selectedItem"
+                        md-search-text-change="ctrl.querySearch(ctrl.searchText)"
+                        md-search-text="ctrl.searchText"
+                        md-selected-item-change="ctrl.selectedItemChange(item)"
+                        md-items="item in ctrl.current"
+                        md-item-text="item"
+                        md-min-length="0"
+                        placeholder="Type your knowledge">
+                    <md-item-template>
+                        <span style="color: #000;" md-highlight-text="searchText" md-highlight-flags="^i">{{item}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No matches found for "{{searchText}}".
+                    </md-not-found>
+                </md-autocomplete>
+                <md-chip-template>
+                    <span>
+                      <strong>{{$chip}}</strong>
+                    </span>
+                </md-chip-template>
+            </md-chips>
+            <md-button class="md-fab md-mini">Add</md-button>
+        </form>
+    </div>
     <pre>
-
-
 
 
 
@@ -49,7 +60,7 @@
         <md-header>Recent Rules</md-header>
         <md-list-item class="md-1-line" ng-repeat="item in ctrl.recent">
             <div class="md-list-item-text">
-                <p>{{item}} <a href="">edit</a> <a href="">delete</a> </p>
+                <p>{{item}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="">edit</a> <a href="">delete</a> </p>
             </div>
         </md-list-item>
     </md-list>
