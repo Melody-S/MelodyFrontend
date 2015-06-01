@@ -5,15 +5,13 @@ angular.module('typewriterApp', ['ngMaterial'])
 
     .controller('AutoCtrl', function($scope, $mdToast) {
         var ctrl = this;
-        ctrl.simulateQuery = false;
-        ctrl.isDisabled = false;
         ctrl.all = ["red", "orange", "yellow", "green", "blue", "purple"];
-        ctrl.current = [];
+        ctrl.current = [];   //the current list of options in the autocomplete dropdown menu
         ctrl.querySearch = querySearch;
         ctrl.selectedItemChange = selectedItemChange;
         ctrl.searchTextChange = searchTextChange;
-        ctrl.recent = [];
-        ctrl.currentRule = [];
+        ctrl.recent = [];   //a list of recent rules that have been submitted. Includes most recent 3 rules
+        ctrl.currentRule = []; //The rule that is currently being built. Constructed from list of current chips
 
         function querySearch (query) {
             if (query.length == 0) {
@@ -38,7 +36,7 @@ angular.module('typewriterApp', ['ngMaterial'])
         }
         function selectedItemChange(item) {
             //  console.log('Item change to ' + item.stringify());
-
+            ctrl.searchText = "";
 
         }
 
@@ -50,13 +48,13 @@ angular.module('typewriterApp', ['ngMaterial'])
 
         ctrl.addRule = function(){
             $scope.openToast();
-                ctrl.recent.reverse().push(ctrl.currentRule.slice());
+            ctrl.recent.reverse().push(ctrl.currentRule.toString());
+            ctrl.recent.reverse();
+            if (ctrl.recent.length > 3) {
+                ctrl.recent.reverse().shift();
                 ctrl.recent.reverse();
-                if (ctrl.recent.length > 3) {
-                    ctrl.recent.reverse().shift();
-                    ctrl.recent.reverse();
-                }
             }
+        }
 
 
     });
